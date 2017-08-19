@@ -12,5 +12,4 @@ See `example.js` for a basic example of how to use this module.
 ### To-Do:
  - [ ] Make errors cleaner (this module is promise-based, and currently rejected
    errors aren't very pretty or descriptive.)
- - [ ] Prettify [documentation](https://mundayne.github.io/reaction-menu).
  - [ ] Finish this list.
