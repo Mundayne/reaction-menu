@@ -1,4 +1,3 @@
-const Discord = require('discord.js')
 const RC = require('reaction-core')
 const RM = require('./src/index')
 
@@ -7,7 +6,7 @@ const bot = new RC.Client()
 bot.on('message', async msg => {
   if (msg.content === '!!!test') {
     let Menu = new RM.Menu(msg.channel)
-    for (page of pages) {
+    for (let page of pages) {
       await Menu.add(page).catch(console.error)
     }
     Menu.send(['search']).catch(console.error)

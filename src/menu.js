@@ -9,7 +9,6 @@ class Menu {
 
     this.pages = []
     this.page = 0
-    this.message
   }
 
   send (buttons = []) {
@@ -60,8 +59,8 @@ class Menu {
     return new Promise((resolve, reject) => {
       if (!page) {
         reject(new Error('Invalid arguments.'))
-      } else if (pages.length > 0) {
-        index = this.pages.indexOf(page)
+      } else if (this.pages.length > 0) {
+        let index = this.pages.indexOf(page)
         if (index > -1) {
           let gone = this.pages.splice(index, 1)
           resolve(this.pages, gone)

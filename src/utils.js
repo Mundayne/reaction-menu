@@ -13,7 +13,7 @@ exports.makeButtons = (menu, btns) => {
   })
   menu.menu.Menu.AddButton(btn)
 
-  for (button of btns) {
+  for (let button of btns) {
     if (Buttons.hasOwnProperty(button)) {
       let b = Buttons[button]
       btn.SetEmoji(b.emoji)
