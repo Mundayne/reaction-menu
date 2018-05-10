@@ -1,36 +1,44 @@
 const Buttons = require('./buttons')
-const RC = require('reaction-core')
 
-exports.makeButtons = (menu, btns) => {
-  let btn = new RC.Button()
-  btn.SetData({menu: menu})
+exports.makeButtons = async (menu, btns) => {
+  let left = Buttons.left.emoji
+  let right = Buttons.right.emoji
+  if (menu.options && menu.options.custom) {
+    left = menu.options.custom.left || Buttons.left.emoji
+    right = menu.options.custom.right || Buttons.right.emoji
+  }
 
-  btn.SetEmoji(Buttons.left.emoji)
-  btn.SetCallback((user, message, data = null) => {
-    if (menu.page > 1) {
-      data.menu.previous().catch(console.error)
-    }
-  })
-  menu.menu.Menu.AddButton(btn)
+  if (!menu.options || !menu.options.disable || !menu.options.disable.left) {
+    await menu.menu.addButtons({
+      emoji: left,
+      run: (user, message) => {
+        if (menu.page > 1) menu.previous().catch(console.error)
+      }
+    })
+  }
 
-  for (button of btns) {
+  for (let button of btns) {
     if (Buttons.hasOwnProperty(button)) {
       let b = Buttons[button]
-      btn.SetEmoji(b.emoji)
-      btn.SetCallback((user, message, data = null) => {
-        b.callback(user, message, data)
+      await menu.menu.addButtons({
+        emoji: b.emoji,
+        run: (user, message) => {
+          b.callback(user, message, menu)
+        }
       })
-      menu.menu.Menu.AddButton(btn)
+    } else if (button.emoji && button.run) {
+      await menu.menu.addButtons(button)
     }
   }
 
-  btn.SetEmoji(Buttons.right.emoji)
-  btn.SetCallback((user, message, data = null) => {
-    if (data.menu.page < data.menu.pages.length) {
-      data.menu.next().catch(console.error)
-    }
-  })
-  menu.menu.Menu.AddButton(btn)
+  if (!menu.options || !menu.options.disable || !menu.options.disable.right) {
+    await menu.menu.addButtons({
+      emoji: right,
+      run: (user, message) => {
+        if (menu.page < menu.pages.length) menu.next().catch(console.error)
+      }
+    })
+  }
 }
 
 exports.numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
