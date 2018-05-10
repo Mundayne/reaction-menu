@@ -18,13 +18,13 @@ class Menu {
         page.number = this.pages.indexOf(page) + 1
         let embed = Object.keys(page.embed).length > 0
         console.log(embed)
-        this.menu = new RC.Message(this.pages[0], this.channel, embed)
+        this.menu = new RC.Message(embed ? page.embed : page.content, this.channel, embed)
         this.menu.AddMenu()
         Utils.makeButtons(this, buttons)
         this.menu.Send().then(msg => {
           console.log(Object.keys(page.embed))
           console.log(page.embed)
-          msg.edit(page.content, page.embed)
+          msg.edit(page.content, {embed: page.embed})
           this.page = 1
           this.message = msg
           resolve(this.page, msg)

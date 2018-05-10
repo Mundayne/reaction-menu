@@ -4,6 +4,7 @@ class SubMenu {
   constructor (msg, pages) {
     this.menu = new Menu(msg.channel)
     this.add(pages)
+    this.embed = {}
   }
 
   get content () {
@@ -11,7 +12,7 @@ class SubMenu {
     let page
     for (let i; i < this.menu.pages.length; i++) {
       page = this.menu.pages[i]
-      cString += `[${i - 1}] ${page.title}\n`
+      cString += `[${i + 1}] ${page.title}\n`
     }
     cString += '```'
 
