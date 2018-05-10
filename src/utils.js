@@ -1,14 +1,14 @@
 const Buttons = require('./buttons')
 
-exports.makeButtons = async (menu, btns) => {
+exports.makeButtons = async (menu, btns, options = { }) => {
   let left = Buttons.left.emoji
   let right = Buttons.right.emoji
-  if (menu.options && menu.options.custom) {
-    left = menu.options.custom.left || Buttons.left.emoji
-    right = menu.options.custom.right || Buttons.right.emoji
+  if (options.custom) {
+    left = options.custom.left || Buttons.left.emoji
+    right = options.custom.right || Buttons.right.emoji
   }
 
-  if (!menu.options || !menu.options.disable || !menu.options.disable.left) {
+  if (!options || !options.disable || !options.disable.left) {
     await menu.menu.addButtons({
       emoji: left,
       run: (user, message) => {
@@ -31,7 +31,7 @@ exports.makeButtons = async (menu, btns) => {
     }
   }
 
-  if (!menu.options || !menu.options.disable || !menu.options.disable.right) {
+  if (!options || !options.disable || !options.disable.right) {
     await menu.menu.addButtons({
       emoji: right,
       run: (user, message) => {

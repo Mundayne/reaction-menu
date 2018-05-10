@@ -14,7 +14,7 @@ client.on('message', async msg => {
     for (let page of pages) {
       await menu.add(page).catch(console.error)
     }
-    menu.send(btns).catch(console.error)
+    menu.send(btns, { disable: { left: true }, custom: { right: '💔' } }).catch(console.error)
   }
 })
 
