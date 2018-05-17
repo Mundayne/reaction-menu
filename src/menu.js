@@ -2,21 +2,20 @@ const RC = require('reaction-core')
 const Utils = require('./utils')
 
 class Menu {
-  constructor (channel, handler) {
+  constructor (channel, handler, options = { RC: { }, RM: { } }) {
     this.id = Date.now()
     this.handler = handler
-
     this.channel = channel
-
+    this.options = options
     this.pages = []
     this.page = 0
   }
 
-  send (buttons = [], options = { }) {
+  send (buttons = []) {
     return new Promise((resolve, reject) => {
       if (this.pages.length > 0) {
-        this.menu = new RC.Menu(this.pages[0])
-        Utils.makeButtons(this, buttons, options)
+        this.menu = new RC.Menu(this.pages[0], this.options.RC)
+        Utils.makeButtons(this, buttons, this.options.RM)
         this.handler.addMenus(this.menu)
         this.channel.sendMenu(this.menu).then(msg => {
           this.page = 1

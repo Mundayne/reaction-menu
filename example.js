@@ -9,12 +9,12 @@ client.on('messageReactionAdd', (messageReaction, user) => handler.handle(messag
 
 client.on('message', async msg => {
   if (msg.content === ';;') {
-    let menu = new RM.Menu(msg.channel, handler)
+    let menu = new RM.Menu(msg.channel, handler, { RM: { disable: { left: true }, custom: { right: '💔' } }, RC: { owner: msg.author.id } })
     let btns = makeBtns(menu)
     for (let page of pages) {
       await menu.add(page).catch(console.error)
     }
-    menu.send(btns, { disable: { left: true }, custom: { right: '💔' } }).catch(console.error)
+    menu.send(btns).catch(console.error)
   }
 })
 
