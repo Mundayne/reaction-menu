@@ -1,6 +1,9 @@
 const Buttons = require('./buttons')
+const RC = require('reaction-core')
 
-exports.makeButtons = async (menu, btns, options = { }) => {
+exports.makeButtons = (menu, btns, options = { }) => {
+  let buttons = []
+
   let left = Buttons.left.emoji
   let right = Buttons.right.emoji
   if (options.custom) {
@@ -9,7 +12,7 @@ exports.makeButtons = async (menu, btns, options = { }) => {
   }
 
   if (!options || !options.disable || !options.disable.left) {
-    await menu.menu.addButtons({
+    buttons.push({
       emoji: left,
       run: (user, message) => {
         if (menu.page > 1) menu.previous().catch(console.error)
@@ -20,25 +23,26 @@ exports.makeButtons = async (menu, btns, options = { }) => {
   for (let button of btns) {
     if (Buttons.hasOwnProperty(button)) {
       let b = Buttons[button]
-      await menu.menu.addButtons({
+      buttons.push({
         emoji: b.emoji,
         run: (user, message) => {
           b.callback(user, message, menu)
         }
       })
     } else if (button.emoji && button.run) {
-      await menu.menu.addButtons(button)
+      buttons.push(button)
     }
   }
 
   if (!options || !options.disable || !options.disable.right) {
-    await menu.menu.addButtons({
+    buttons.push({
       emoji: right,
       run: (user, message) => {
         if (menu.page < menu.pages.length) menu.next().catch(console.error)
       }
     })
   }
+  return new RC.Menu(menu.pages[0], buttons, menu.options.RC)
 }
 
 exports.numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']

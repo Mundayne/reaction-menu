@@ -1,6 +1,6 @@
 {
   "name": "reaction-menu",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A menu template for Discord built on top of reaction-core.",
   "main": "./src/index.js",
   "scripts": {
@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/Mundayne/reaction-menu#readme",
   "dependencies": {
-    "reaction-core": "^2.0.5"
+    "reaction-core": "^2.0.6"
   }
 }
