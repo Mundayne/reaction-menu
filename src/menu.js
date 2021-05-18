@@ -73,7 +73,7 @@ class Menu {
     return new Promise((resolve, reject) => {
       if (this.page < this.pages.length && this.page !== 0) {
         let content = ''
-        let embed = {}
+        let embed = null
         if (typeof this.pages[this.page] === 'string') {
           content = this.pages[this.page]
         } else {
@@ -94,7 +94,7 @@ class Menu {
     return new Promise((resolve, reject) => {
       if (this.page > 1 && this.page <= this.pages.length) {
         let content = ''
-        let embed = {}
+        let embed = null
         if (typeof this.pages[this.page - 2] === 'string') {
           content = this.pages[this.page - 2]
         } else {
@@ -118,7 +118,7 @@ class Menu {
           reject(console.warn('Page already displayed.'))
         } else if (index > 0 && index <= this.pages.length) {
           let content = ''
-          let embed = {}
+          let embed = null
           if (typeof this.pages[index - 1] === 'string') {
             content = this.pages[index - 1]
           } else {
